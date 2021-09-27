@@ -1,17 +1,15 @@
 class Train
-
   attr_accessor :speed
-  attr_reader :carriage, :route, :current_station, :next_station, :previous_station
+  attr_reader :carriages_count, :route, :current_station, :next_station, :previous_station
 
-  def initialize(number, type, carriage, speed)
+  def initialize(number, type, carriages_count)
     @number = number
     @type = type
-    @carriage = carriage
-    @speed = speed
+    @carriage = carriages_count
   end
 
-  def go #поезд набирает скорость
-    self.speed = 100
+  def speed_up(value) #поезд набирает скорость
+    self.speed = value
   end
 
   def stop #поезд тормозит

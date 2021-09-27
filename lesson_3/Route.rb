@@ -1,29 +1,18 @@
 class Route
-
   attr_reader :stations
 
-  def initialize(station_first, station_last)
-    station_first = station_first
-    @@station_last = station_last
-    @stations = []
-    @stations << station_first
-    @stations << @@station_last
+  def initialize(first_station, last_station)
+    @stations = [first_station, last_station]
   end
 
 #добавлем промежуточные станции
-  def add_station(station_name)
-    @stations[@stations.length-1] = station_name
-    @stations << @@station_last
+  def add(station)
+    @stations.insert(-2, station)
   end
 
 #удаляем станцию
-  def delete_station(station_name)
-    @stations.delete(station_name)
+  def delete(station)
+    @stations.delete(station)
   end
-
-#Выводим список станций
-  #def station_list
-    #@stations
-  #end
 
 end

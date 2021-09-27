@@ -1,40 +1,28 @@
 class Station
-
-  @@trains_passenger = []
-  @@trains_freight = []
   @@trains = []
 
-  def initialize(station_name)
-    @station_name = station_name
+  def initialize(name)
+    @name = name
   end
 
-  #станция принимает поезда, train_number - номер поезда, #train_type - вид поезда (грузовой, пассажирский)
-  def add_train(train_number, train_type)
-    if train_type == "пассажирский"
-      @@trains_passenger << train_number
-    elsif train_type == "грузовой"
-      @@trains_freight << train_number
-      end
+  #станция принимает поезда
+  def add_train(train)
+    @@trains << train
+  end
+
+  #сортировка по типу поезда
+  def trains_by_type(type)
+    @@trains.select{ |train| train.type == type}.size
   end
 
   #станция отправляет поезда
-  def delete_train(train_number)
-    if @@trains_passenger.include?(train_number)
-      @@trains_passenger.delete(train_number)
-    else
-      @@trains_freight.delete(train_number)
-    end
+  def send(train)
+    @@trains.delete(train)
   end
 
   #вывод списка поездов, находящихся на станции
-  def train_list
-    @@trains = @@trains_passenger + @@trains_freight
-    puts "Все поезда, находящиеся на станции: #{@@trains}"
-  end
-
-  #Вывод количества грузовых и пассажирских поездов
-  def train_number
-    puts "На станции #{@@trains_passenger.length} пассажирских и #{@@trains_freight.length} грузовых поездов"
+  def trains
+    @@trains
   end
 
 end
