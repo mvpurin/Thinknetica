@@ -8,5 +8,8 @@ require_relative 'cargo_carriage'
 require_relative 'passenger_carriage'
 require_relative 'interface'
 
-@interface = Interface.new
-@interface.interface_new
+interface = Interface.new
+interface.interface_new
+
+
+

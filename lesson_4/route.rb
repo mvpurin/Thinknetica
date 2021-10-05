@@ -1,17 +1,15 @@
 class Route
-  attr_reader :stations, :first_station, :last_station
+  attr_reader :stations
 
-  def initialize(first_station, last_station)
-    @first_station = Station.new(first_station)
-    @last_station = Station.new(last_station)
-    @stations = [@first_station, @last_station]
+  def initialize(first, last)
+    @stations = [Station.new(first), Station.new(last)]
   end
 
   def add_station(station)
-    @stations.insert(-2, station)
+    stations.insert(-2, station)
   end
 
   def del_station(station)
-    @stations.delete(station)
+    stations.delete(station)
   end
 end

@@ -1,5 +1,5 @@
 class Interface
-  attr_reader :answer, :stations, :trains, :routes
+  attr_reader :stations, :trains, :routes
 
   def initialize
     @stations = []
@@ -7,16 +7,13 @@ class Interface
     @routes = []
   end
 
-
-
-
   def interface_new
     loop do
       self.menu
 
       break if @answer == 0
 
-      case answer
+      case @answer
       when 1
         self.new_station
       when 2
@@ -49,7 +46,6 @@ class Interface
 #Пользователю должен быть доступен только метод interface_new, так как его достаточно для использования программы.
 #Доступ к остальным методам должен быть закрыт, так как пользователь программы может вмешаться в ее работоспособность.
 
-
   def menu
     puts "To create a station type 1"
     puts "To create a train type 2"
@@ -70,7 +66,7 @@ class Interface
   def new_station
     puts "Enter the station name: "
     name_station = gets.chomp
-    @stations << Station.new(name_station)
+    stations << Station.new(name_station)
   end
 
   def new_train
@@ -81,9 +77,9 @@ class Interface
     type = gets.chomp.downcase
 
     if type == "cargo"
-      @trains << CargoTrain.new(number)
+      trains << CargoTrain.new(number)
     elsif type == "passenger"
-      @trains << PassengerTrain.new(number)
+      trains << PassengerTrain.new(number)
     end
   end
 
@@ -95,8 +91,8 @@ class Interface
     last = gets.chomp
 
     route = Route.new(first, last)
-    @routes << Route.new(first, last)
-    @stations.push(route.first_station, route.last_station)
+    routes << Route.new(first, last)
+    stations.push(route.stations.first, route.stations.last)
   end
 
   def add_station_to_route
@@ -109,9 +105,9 @@ class Interface
     puts "Enter the last station of the route: "
     last = gets.chomp
 
-    @routes.each do |route|
-      if route.stations.first.station == first && route.stations.last.station == last
-        station_name = @stations.find{|station| station.station == name_station}
+    routes.each do |route|
+      if route.stations.first.name == first && route.stations.last.name == last
+        station_name = stations.find{|station| station.name == name_station}
         if station_name == nil
           puts "There is no such station"
         else
@@ -133,9 +129,9 @@ class Interface
     puts "Enter the last station of the route: "
     last = gets.chomp
 
-    @routes.each do |route|
-      if route.stations.first.station == first && route.stations.last.station == last
-        station_name = @stations.find{|station| station.station == name_station}
+    routes.each do |route|
+      if route.stations.first.name == first && route.stations.last.name == last
+        station_name = stations.find{|station| station.name == name_station}
         if station_name == nil
           puts "There is no such station"
         else
@@ -156,10 +152,10 @@ class Interface
 
     puts "Enter the last station of the route: "
     last = gets.chomp
-    @routes.each do |route|
-      if route.stations.first.station == first && route.stations.last.station == last
+    routes.each do |route|
+      if route.stations.first.name == first && route.stations.last.name == last
         route = route
-        train = @trains.find{|train| train.number == number}
+        train = trains.find{|train| train.number == number}
         train.add_route(route)
       end
     end
@@ -174,7 +170,7 @@ class Interface
 
     train = @trains.find{|train| train.number == number}
 
-    if @trains.include?(train)
+    if trains.include?(train)
       if train.type == "cargo"
         carriage = CargoCarriage.new
       elsif train.type == "passenger"
@@ -190,9 +186,9 @@ class Interface
     puts "Enter the train number: "
     number = gets.chomp
 
-    train = @trains.find{|train| train.number == number}
+    train = trains.find{|train| train.number == number}
 
-    if @trains.include?(train)
+    if trains.include?(train)
       train.del_carriage
     else
       puts "There is no such train!"
@@ -203,8 +199,8 @@ class Interface
     puts "Enter the train number: "
     number = gets.chomp
 
-    train = @trains.find{|train| train.number == number}
-    if @trains.include?(train)
+    train = trains.find{|train| train.number == number}
+    if trains.include?(train)
       train.move_forward
     else
       puts "There is no such train!"
@@ -215,8 +211,8 @@ class Interface
     puts "Enter the train number: "
     number = gets.chomp
 
-    train = @trains.find{|train| train.number == number}
-    if @trains.include?(train)
+    train = trains.find{|train| train.number == number}
+    if trains.include?(train)
       train.move_back
     else
       puts "There is no such train!"
@@ -227,13 +223,13 @@ class Interface
     puts "Enter the station name: "
     station_name = gets.chomp
 
-    station = @stations.find{|station| station.station == station_name}
+    station = stations.find{|station| station.name == station_name}
     station.trains.each {|train| puts train.number}
   end
 
   def station_list
-    if @stations.any?
-      @stations.each {|station| puts station.station}
+    if stations.any?
+      stations.each {|station| puts station.name}
     else
       puts "The station list is empty!"
     end
