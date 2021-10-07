@@ -1,9 +1,11 @@
 class Train
   attr_reader :speed, :number
+  attr_writer :speed
 
   def initialize(number)
     @number = number
     @carriage_list = []
+    @speed = 0
   end
 
   def speed
