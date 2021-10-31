@@ -95,6 +95,8 @@ class Interface
       raise "Incorrect type of the train! To exit type 'exit'"
     end
 
+    puts "Train number #{number} is added!"
+
   rescue StandardError => e
     puts e.message
     retry
