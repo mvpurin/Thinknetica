@@ -12,12 +12,12 @@ class Train
   @@trains = []
 
   def initialize(number)
-    @number = number.to_s
+    @number = number
     @carriage_list = []
     @speed = 0
     @@trains.push(self)
     register_instance
-    valid?
+    validate!
   end
 
   def speed
@@ -29,11 +29,17 @@ class Train
   end
 
   def add_carriage(carriage)
-    carriage_list << carriage if speed == 0 && type == carriage.type
+    @carriage_list << carriage
+    puts "The train has #{@carriage_list.size} carriages"
   end
 
   def del_carriage
-    carriage_list.delete_at(0) if speed == 0
+    if @carriage_list.empty?
+      raise "The train does not have any carriages! To exit type 'exit"
+    else
+      @carriage_list.delete_at(0)
+      puts "The train has #{@carriage_list.size} carriages"
+    end
   end
 
   def add_route(route)
@@ -43,14 +49,16 @@ class Train
   end
 
   def move_forward
+    raise "The train is on the last station of the route!" if @current_station == @route.stations[-1]
     @current_station.del_train(self)
-    @current_station = @route.stations[@route.stations.index(@current_station)+1] if speed != 0 && @current_station != @route.stations[-1]
+    @current_station = @route.stations[@route.stations.index(@current_station)+1] if speed != 0
     @current_station.add_train(self)
   end
 
   def move_back
+    raise "The train is on the first station of the route!" if @current_station == @route.stations[0]
     @current_station.del_train(self)
-    @current_station = @route.stations[@route.stations.index(@current_station)-1] if speed != 0 && @current_station != @route.stations[0]
+    @current_station = @route.stations[@route.stations.index(@current_station)-1] if speed != 0
     @current_station.add_train(self)
   end
 
@@ -69,12 +77,11 @@ class Train
   def valid?
     validate!
     true
-    rescue Exception => e
+  rescue
       false
-      puts e.inspect
   end
 
   def validate!
-    raise RuntimeError, "Train number format is invalid!" if number !~ NUMBER_FORMAT
+    raise RuntimeError, "Train number format is invalid! To exit type 'exit'" if number !~ NUMBER_FORMAT
   end
 end

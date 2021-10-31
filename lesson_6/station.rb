@@ -10,9 +10,10 @@ class Station
   end
 
   def initialize(name)
-    @name = name
+    @name = name.to_s
     @trains = []
     register_instance
+    validate!
   end
 
   def add_train(train)
@@ -26,5 +27,16 @@ class Station
 
   def del_train(train)
     trains.delete(train)
+  end
+
+  def valid?
+    validate!
+    true
+    rescue
+      false
+  end
+
+  def validate!
+    raise "Station name should not be empty! To exit type 'exit'" if name.empty?
   end
 end
