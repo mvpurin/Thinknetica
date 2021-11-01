@@ -12,12 +12,12 @@ class Train
   @@trains = []
 
   def initialize(number)
+    validate!(number)
     @number = number
     @carriage_list = []
     @speed = 0
     @@trains.push(self)
     register_instance
-    validate!
   end
 
   def speed
@@ -81,7 +81,7 @@ class Train
       false
   end
 
-  def validate!
+  def validate!(number)
     raise RuntimeError, "Train number format is invalid! To exit type 'exit'" if number !~ NUMBER_FORMAT
   end
 end

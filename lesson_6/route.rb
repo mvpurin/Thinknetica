@@ -7,12 +7,12 @@ class Route
   NUMBER_FORMAT = /^\d+$/
 
   def initialize(number, first, last)
+    validate!(number)
     @number = number
     @first = Station.new(first)
     @last = Station.new(last)
     @stations = [@first, @last]
     register_instance
-    validate!
   end
 
   def add_station(station)
@@ -26,7 +26,7 @@ class Route
     stations.delete(station)
   end
 
-  def validate!
+  def validate!(number)
     raise "Number of the route should not be empty! To exit type 'exit'" if number.empty?
     raise "Number of the route should be numerical! To exit type 'exit'" if number !~ NUMBER_FORMAT
   end

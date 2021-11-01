@@ -66,10 +66,15 @@ class Interface
   def new_station
     puts "Enter the station name: "
     name_station = gets.chomp
+
+    if name_station == "exit"
+      return
+    end
+
     stations << Station.new(name_station)
   rescue StandardError => e
     puts e.message
-    retry if name_station != "exit"
+    retry
   end
 
   def new_train
