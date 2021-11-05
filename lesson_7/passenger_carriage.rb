@@ -2,13 +2,13 @@ class PassengerCarriage < Carriage
   attr_reader :seats, :all_seats, :number
   attr_writer :seats
   
-  #@@number = 1
+  @@number = 1
 
   def initialize(seats)
     @all_seats = seats.to_i
     @seats = seats.to_i
-    #@number = @@number
-    #@@number += 1
+    @number = @@number
+    @@number += 1
   end
 
   def type

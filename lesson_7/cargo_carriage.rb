@@ -2,13 +2,13 @@ class CargoCarriage < Carriage
   attr_reader :all_volume, :volume, :number
   attr_writer :volume
 
-  #@@number = 1
+  @@number = 1
 
   def initialize(volume)
     @all_volume = volume.to_f
     @volume = volume.to_f
-    #@number = @@number
-    #@@number += 1
+    @number = @@number
+    @@number += 1
   end
 
   def take_volume(arg)
