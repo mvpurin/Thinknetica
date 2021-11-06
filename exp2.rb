@@ -18,19 +18,28 @@ module InstanceCounter
   end
 end
 
-class Cargo
+class Carriage
   include InstanceCounter
   def initialize
     register_instance
   end
 end
-class PassCargo < Cargo
+
+class PassCarriage < Carriage
    def initialize
    end
 end
 
-pass1 = PassCargo.new
-puts pass1.register_instance
+class CargoCarriage < Carriage
+   def initialize
+   end
+end
 
-pass2 = PassCargo.new
-puts pass2.register_instance
+carriage1 = PassCarriage.new
+puts carriage1.register_instance
+
+carriage2 = PassCarriage.new
+puts carriage2.register_instance
+
+carriage3 = CargoCarriage.new
+puts carriage3.register_instance
