@@ -33,9 +33,9 @@ class Train
     @carriage_list << carriage
     puts "The train has #{@carriage_list.size} carriage(s)"
     if carriage.type == "passenger"
-      puts "The added carriage number #{carriage.number} has #{carriage.seats} seat(s)"
+      puts "The added carriage number #{carriage.number} has #{carriage.total_place} seat(s)"
     else
-      puts "The added carriage number #{carriage.number} has #{carriage.volume} volume"
+      puts "The added carriage number #{carriage.number} has #{carriage.total_place} volume"
     end
   end
 
@@ -86,9 +86,9 @@ class Train
     else
       @carriage_list.each do |carriage|
         if carriage.type == "cargo"
-          puts "Carriage number: #{carriage.number}, carriage type: #{carriage.type}, free_volume: #{carriage.volume}, taken_volume: #{carriage.taken_volume}"
+          puts "Carriage number: #{carriage.number}, carriage type: #{carriage.type}, free_volume: #{carriage.free_place}, taken_volume: #{carriage.used_place}"
         else
-          puts "Carriage number: #{carriage.number}, carriage type: #{carriage.type}, free seats: #{carriage.seats}, taken seats: #{carriage.taken_seats}"
+          puts "Carriage number: #{carriage.number}, carriage type: #{carriage.type}, free seats: #{carriage.free_place}, taken seats: #{carriage.used_place}"
         end
       end
     end

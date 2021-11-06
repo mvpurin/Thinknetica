@@ -224,14 +224,14 @@ class Interface
     if train != nil
       if train.type == "cargo"
         puts "Enter the volume of the carriage: "
-        volume = gets.chomp
+        volume = gets.chomp.to_f
         carriage = CargoCarriage.new(volume)
 
         #puts "number is nil!!!" if carriage.number.nil?
 
       elsif train.type == "passenger"
         puts "Enter the number of seats in the carriage: "
-        seats = gets.chomp
+        seats = gets.chomp.to_i
         carriage = PassengerCarriage.new(seats)
       end
       train.add_carriage(carriage)
