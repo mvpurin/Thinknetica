@@ -27,11 +27,13 @@ end
 
 class PassCarriage < Carriage
    def initialize
+    super
    end
 end
 
 class CargoCarriage < Carriage
    def initialize
+    super
    end
 end
 

@@ -2,8 +2,8 @@ class CargoCarriage < Carriage
 
 
 
-  def initialize(volume)
-    super(volume)
+  def initialize(volume,number)
+    super(volume,number)
   end
 
   def take_volume(arg)

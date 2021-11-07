@@ -1,7 +1,7 @@
 class PassengerCarriage < Carriage
 
-  def initialize(seats)
-    super(seats)
+  def initialize(seats, number)
+    super(seats,number)
   end
 
   def take_seat

@@ -219,20 +219,23 @@ class Interface
       return
     end
 
+    puts "Enter the number of the carriage"
+    num = gets.chomp
+
     train = self.find_train(number)
 
     if train != nil
       if train.type == "cargo"
         puts "Enter the volume of the carriage: "
         volume = gets.chomp.to_f
-        carriage = CargoCarriage.new(volume)
+        carriage = CargoCarriage.new(volume,num)
 
         #puts "number is nil!!!" if carriage.number.nil?
 
       elsif train.type == "passenger"
         puts "Enter the number of seats in the carriage: "
         seats = gets.chomp.to_i
-        carriage = PassengerCarriage.new(seats)
+        carriage = PassengerCarriage.new(seats,num)
       end
       train.add_carriage(carriage)
     else
@@ -364,13 +367,13 @@ class Interface
     if carriage.type == "cargo"
       puts "Enter the volume which you would like to take: "
       volume = gets.chomp.to_f
-      raise "The carriage does not have so much volume!" if volume > carriage.volume
+      raise "The carriage does not have so much volume!" if volume > carriage.total_place
       carriage.take_volume(volume)
-      puts "The carriage number #{carriage.number} has #{carriage.volume} free volume"
+      puts "The carriage number #{carriage.number} has #{carriage.free_place} free volume"
     else
       carriage.take_seat
-      raise "the carriage does not have so many free seats!" if carriage.seats == 0
-      puts "The carriage number #{carriage.number} has #{carriage.seats} free seats"
+      raise "the carriage does not have so many free seats!" if carriage.free_place.zero?
+      puts "The carriage number #{carriage.number} has #{carriage.free_place} free seats"
     end
   rescue StandardError => e 
     puts e
