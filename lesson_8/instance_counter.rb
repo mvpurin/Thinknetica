@@ -24,6 +24,7 @@ module InstanceCounter
   # during the initialize procedure
   module InstanceMethods
     protected
+
     def register_instance
       self.class.increse_instances
     end

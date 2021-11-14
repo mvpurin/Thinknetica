@@ -1,3 +1,4 @@
+# This class describes stations
 class Station
   require './instance_counter.rb'
   include InstanceCounter
@@ -20,7 +21,6 @@ class Station
     trains << train
   end
 
-  # возвращает список поездов на станции по типу
   def trains_by_type(type)
     trains.select { |train| train.type == type }.size
   end
@@ -30,12 +30,11 @@ class Station
   end
 
   def trains_on_station
-    raise 'There are no trains at the station!' if trains.empty?    
+    raise 'There are no trains at the station!' if trains.empty?
     trains.each do |train|
       puts "Train number: #{train.number}, type: #{train.type},\
        carriage(s): #{train.carriage_list.size}"
     end
-  #end
   rescue StandardError => e
     puts e.message
   end
