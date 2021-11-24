@@ -4,19 +4,25 @@
 # their numbers and stations
 class Route
   require './instance_counter.rb'
+  require './validation.rb'
   include InstanceCounter
+  include Validation
 
   attr_reader :number, :stations
 
   NUMBER_FORMAT = /^\d+$/
 
+  validate :number, :presence
+  validate :number, :type, String
+
   def initialize(number, first, last)
-    validate!(number)
+    # validate!(number)
     @number = number
     @first = Station.new(first)
     @last = Station.new(last)
     @stations = [@first, @last]
     register_instance
+    self.valid?
   end
 
   def add_station(station)
@@ -34,10 +40,10 @@ class Route
     stations.delete(station)
   end
 
-  def validate!(number)
-    raise "Number of the route should not be empty! To exit type 'exit'"\
-     if number.empty?
-    raise "Number of the route should be numerical! To exit type 'exit'"\
-     if number !~ NUMBER_FORMAT
-  end
+  # def validate!(number)
+  #   raise "Number of the route should not be empty! To exit type 'exit'"\
+  #    if number.empty?
+  #   raise "Number of the route should be numerical! To exit type 'exit'"\
+  #    if number !~ NUMBER_FORMAT
+  # end
 end

@@ -1,7 +1,9 @@
 # This class describes stations
 class Station
   require './instance_counter.rb'
+  require './validation.rb'
   include InstanceCounter
+  include Validation
   attr_reader :trains, :name
 
   @@instances = []
@@ -10,11 +12,14 @@ class Station
     @@instances
   end
 
+  validate :name, :presence
+  validate :name, :type, String
+
   def initialize(name)
-    validate!(name)
     @name = name.to_s
     @trains = []
     register_instance
+    self.valid?
   end
 
   def add_train(train)
@@ -37,16 +42,5 @@ class Station
     end
   rescue StandardError => e
     puts e.message
-  end
-
-  def valid?
-    validate!
-    true
-  rescue StandardError
-    false
-  end
-
-  def validate!(arg)
-    raise "Station name should not be empty! To exit type 'exit'" if arg.empty?
   end
 end

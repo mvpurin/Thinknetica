@@ -86,7 +86,7 @@ class Interface
 
     puts "Train number #{number} is added!"
   rescue StandardError => e
-    puts e.backtrace
+    puts e
     retry
   end
 
@@ -106,7 +106,7 @@ class Interface
     routes << route
     stations.push(route.stations.first, route.stations.last)
   rescue StandardError => e
-    puts e
+    puts e.message
     retry
   end
 

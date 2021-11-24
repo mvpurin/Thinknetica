@@ -16,15 +16,13 @@ class Train
 
   #NUMBER_FORMAT = /^[a-z0-9]{3}-?[a-z0-9]{2}$/i
 
-  validate :number, :presence
-  validate :number, :type, String
-  validate :number, :format, /^[a-z0-9]{3}-?[a-z0-9]{2}$/i
+  # validate :number, :presence
+  # validate :number, :type, String
+  # validate :number, :format, /^[a-z0-9]{3}-?[a-z0-9]{2}$/i
 
   @@trains = []
 
   def initialize(number)
-    # validate!(number)
-
     @number = number
     @carriage_list = []
     @speed = 0
@@ -125,16 +123,4 @@ class Train
   rescue StandardError => e
     puts e.message
   end
-
-  # def valid?
-  #   validate!
-  #   true
-  # rescue StandardError
-  #   false
-  # end
-
-  # def validate!(number)
-  #   raise "Train number format is invalid! To exit type 'exit'"\
-  #    if number !~ NUMBER_FORMAT
-  # end
 end

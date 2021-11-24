@@ -7,13 +7,13 @@ class Carriage
   require './accessors.rb'
   require './validation.rb'
   include Manufacturer
-  # include Validation
+  #include Validation
   extend Accessors
 
   attr_reader :type, :total_place, :used_place, :number
 
-  # attr_accessor_with_history :used_place
-  # strong_attr_accessor :type, String
+  attr_accessor_with_history :used_place
+  strong_attr_accessor :type, String
 
   # validate :total_place, :presence
   # validate :total_place, :type, Integer
@@ -24,7 +24,7 @@ class Carriage
     @total_place = total_place
     @used_place = 0
     @number = number
-    self.valid?
+    #self.valid?
   end
 
   def free_place

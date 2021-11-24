@@ -2,18 +2,22 @@ module Validation
   def self.included(base)
     base.extend ClassMethods
     base.send :include, InstanceMethods
-    self.class_variable_set(:@@validation_list, [])
   end
 
   module ClassMethods
+    attr_reader :validation_list
+
     def validate(attribute, validation, params = nil)
-      class_variable_get(:@@validation_list) << [attribute, validation, params]
+      @validation_list ||= []
+      @validation_list << [attribute, validation, params]
+      p @validation_list
     end
   end
 
   module InstanceMethods
     def validate!
-      self.class.class_variable_get(:@@validation_list).each do |value|
+      p self.class.instance_variable_get(:@validation_list)
+      self.class.validation_list.each do |value|
         self.send(value[1], self.instance_variable_get("@#{value[0]}"), value[2])
       end
     end
@@ -27,15 +31,21 @@ module Validation
     end
 
     def presence(attribute, bla_bla)
-      raise "Attribute value is nil or empty!" if attribute.nil? || attribute.empty?
+      puts "Validation: <presence> for attribute value #{attribute}"
+      raise "Attribute value is nil or empty!\n\n" if attribute.nil? || attribute.empty?
+      puts "Successfully!\n\n"
     end
 
     def format(attribute, regexp)
-      raise "Wrong format for attribute value!" if attribute !~ regexp
+      puts "Validation: <format> for attribute value #{attribute}"
+      raise "Wrong format for attribute value!\n\n" if attribute !~ regexp
+      puts "Successfully!\n\n"
     end
 
     def type(attribute, attribute_class)
-      raise "Wrong class for attribute!" if attribute.class != attribute_class
+      puts "Validation: <type> for attribute value #{attribute}"
+      raise "Wrong class for attribute!\n\n" if attribute.class != attribute_class
+      puts "Successfully!\n\n"
     end
   end
 end
