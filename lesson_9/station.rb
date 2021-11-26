@@ -4,7 +4,7 @@ class Station
   require './validation.rb'
   include InstanceCounter
   include Validation
-  attr_reader :trains, :name
+  attr_reader :trains, :name, :obj
 
   @@instances = []
 
@@ -13,13 +13,14 @@ class Station
   end
 
   validate :name, :presence
-  validate :name, :type, String
+  validate :name, :tipe, String
 
   def initialize(name)
     @name = name.to_s
     @trains = []
     register_instance
-    self.valid?
+    @obj = self.class.superclass
+    self.valid?(obj)
   end
 
   def add_train(train)

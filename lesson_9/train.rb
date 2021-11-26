@@ -9,7 +9,7 @@ class Train
   include Validation
   extend Accessors
 
-  attr_reader :type, :number, :carriage_list
+  attr_reader :type, :number, :carriage_list, :obj
 
   attr_accessor_with_history :speed
   strong_attr_accessor :speed, Integer
@@ -29,7 +29,8 @@ class Train
     @@trains.push(self)
     @type = self.train_type
     register_instance
-    self.valid?
+    @obj = self.class.superclass
+    self.valid?(obj)
   end
 
   def speed

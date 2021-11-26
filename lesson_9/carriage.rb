@@ -10,24 +10,25 @@ class Carriage
   include Validation
   extend Accessors
 
-  attr_reader :type, :total_place, :used_place, :number
+  attr_reader :type, :total_place, :used_place, :number, :obj
 
   attr_accessor_with_history :used_place
   strong_attr_accessor :type, String
 
   validate :total_place, :presence
-  validate :total_place, :tipe, Integer
-  validate :total_place, :format, /^\d/i
+  validate :total_place, :tipe, String
+  validate :total_place.to_s, :format, /^\d/i
 
   def initialize(total_place, number)
     @type = self.carriage_type
     @total_place = total_place
     @used_place = 0
     @number = number
-    #self.valid?
+    @obj = self.class.superclass
+    self.valid?(obj)
   end
 
   def free_place
-    @total_place - @used_place
+    @total_place.to_f - @used_place.to_f
   end
 end

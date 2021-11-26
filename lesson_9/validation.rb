@@ -10,22 +10,29 @@ module Validation
     def validate(attribute, validation, params = nil)
       @validation_list ||= []
       @validation_list << [attribute, validation, params]
-     # p @validation_list
     end
   end
 
   module InstanceMethods
-    def validate!
+    def validate!(arg)
       #require 'pry'; binding.pry
-     # p self.class.instance_variable_get(:@validation_list)
-      self.class.superclass.validation_list.each do |value|
-        #require 'pry'; binding.pry
-        self.send(value[1], self.instance_variable_get("@#{value[0]}"), value[2])
+      #self.class.superclass.validation_list.each do |value|
+        require 'pry'; binding.pry
+        if arg == Object #Родительский класс
+          self.class.validation_list.each do |value|
+            self.send(value[1], self.instance_variable_get("@#{value[0]}"), value[2])
+          end
+        elsif arg.superclass == Object #классы-наследники
+          arg.validation_list.each do |value|
+            self.send(value[1], self.instance_variable_get("@#{value[0].to_s}"), value[2])
+          end
+        end
       end
-    end
 
-    def valid?
-      if validate!
+    def valid?(arg)
+      #self.class.send(:arg)
+      @arg = arg
+      if validate!(arg)
         true
       else
         false
@@ -34,13 +41,18 @@ module Validation
 
     def presence(attribute, bla_bla)
       puts "Validation: <presence> for attribute value #{attribute}"
-      raise "Attribute value is nil or empty!\n\n" if attribute.nil? || attribute.empty?
+      case attribute
+      when attribute.class != Float
+        raise "Attribute value is nil or empty!\n\n" if attribute.nil? || attribute.empty?
+      when attribute.class == Float
+        raise "Attribute value is nil or empty!\n\n" if attribute.nil?
+      end
       puts "Successfully!\n\n"
     end
 
     def format(attribute, regexp)
       puts "Validation: <format> for attribute value #{attribute}"
-      raise "Wrong format for attribute value!\n\n" if attribute !~ regexp
+      raise "Wrong format for attribute value!\n\n" if !(attribute =~ regexp)
       puts "Successfully!\n\n"
     end
 

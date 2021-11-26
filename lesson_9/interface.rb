@@ -187,11 +187,11 @@ class Interface
 
     if train.type == 'cargo'
       puts 'Enter the volume of the carriage: '
-      volume = gets.chomp.to_f
+      volume = gets.chomp
       carriage = CargoCarriage.new(volume, num)
     elsif train.type == 'passenger'
       puts 'Enter the number of seats in the carriage: '
-      seats = gets.chomp.to_i
+      seats = gets.chomp
       carriage = PassengerCarriage.new(seats, num)
     end
     train.add_carriage(carriage)
